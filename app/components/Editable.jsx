@@ -1,21 +1,27 @@
 import React from 'react'
+import classnames from 'classnames';
 
-const Editable = ({ editing, value, onEdit, ...props }) => {
+const Editable = ({ editing, value, onEdit, className, ...props }) => {
   if (editing) {
-    return <Editable.Edit value={value} onEdit={onEdit} />;
+    return <Edit
+      className={classnames}
+      value={value}
+      onEdit={onEdit}
+      {...props} />;
   }
 
-  return <Editable.Value value={value} />;
+  return <span className={classnames('value', className)} {...props}>
+    {value}
+  </span>
 };
-
-Editable.Value = ({ value, ...props }) => <span {...props}>{value}</span>
 
 class Edit extends React.Component {
   render() {
-    const {value, onEdit, ...props} = this.props;
+    const {className, value, onEdit, ...props} = this.props;
 
     return <input
       type="text"
+      classAme={classnames('edit', className)}
       autoFocus
       defaultValue={value}
       onBlur={this.finishEdit}
